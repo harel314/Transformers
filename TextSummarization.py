@@ -1,8 +1,8 @@
 #%%
 import pandas as pd
-import numpy as np
 import textwrap
 from transformers import pipeline
+
 def wrap(x):
     return textwrap.fill(x,replace_whitespace=False,fix_sentence_endings=True)
 def print_summary(doc):
