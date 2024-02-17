@@ -2,3 +2,5 @@ my_trained_model
 wandb
 trainer
 images
+training_dir
+distilbert-finetuned-ner
