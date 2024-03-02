@@ -1,16 +1,20 @@
 #%% imports
+
 from transformers import pipeline
 import textwrap
 import numpy as np
 import pandas as pd
 from pprint import pprint
 import matplotlib.pyplot as plt
-#functions
-def wrap(x):
-    return textwrap.fill(x,replace_whitespace=False,fix_sentence_endings=True)
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from utils.helper_functions import wrap
 
-#%% set the dataframe
-df_ = pd.read_csv('newsArticles/bbc_news_data.csv',sep="\t")
+#%% import csv to pandas dataframe
+
+CSV_PATH = '../data/newsArticles/bbc_news_data.csv'
+df_ = pd.read_csv(CSV_PATH,sep="\t")
 df = df_[['category','content']].copy()
 df.head(1)
 #%% extact the labels
@@ -38,17 +42,17 @@ mlm(text)
 doc_letters = doc.split(' ')
 all_freq = {}
 for i in doc_letters:
- if i in all_freq:
-  all_freq[i] += 1
- else:
-  all_freq[i] = 1
+    if i in all_freq:
+        all_freq[i] += 1
+    else:
+        all_freq[i] = 1
 res = min(all_freq, key = all_freq.get)
 plt.bar(all_freq.keys(), all_freq.values(), 1.0, color='g')
 # replace statistically all words that shows twice with mask
 for key,value in all_freq.items():
     if value == 2:
-      print(key)
-      doc = doc.replace(key,"<mask>")
+        print(key)
+        doc = doc.replace(key,"<mask>")
 
 doc
 #%%
